@@ -3,13 +3,19 @@ import{HiBars3BottomRight, HiOutlineShoppingBag, HiOutlineUser} from 'react-icon
 import SearchBar from './SearchBar';
 import CartDrawer from '../Layout/CartDrawer';
 import { useState } from 'react';
+import { IoMdClose } from 'react-icons/io';
 const Navbar = () => {
 
     const [drawerOpen,setDrawerOpen] = useState(false);
+    const [navDrawerOpen,setNavDrawerOpen] = useState(false);
+
+    const toggleNavDrawer = () =>{
+        setNavDrawerOpen(!navDrawerOpen);
+    };
 
     const toggleCartDrawer = () =>{
         setDrawerOpen(!drawerOpen);
-    }
+    };
 
   return (
     <>
@@ -61,12 +67,30 @@ const Navbar = () => {
                 <div className="overflow-hidden mr-6">   
                     <SearchBar />
                 </div>
-                <button>
+                <button onClick={toggleNavDrawer}>
                     <HiBars3BottomRight className="h-6 w-6 text-gray-700" />
                 </button>
             </div>
         </nav>
         <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer}/>
+
+        {/* Mobile Navigation */}
+        <div className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 ${navDrawerOpen? "translate-x-0" : "-translate-x-full"}`}>
+            <div className="flex justify-end p-4">
+                <button onClick={toggleNavDrawer}>
+                    <IoMdClose className="h-6 w-6 text-gray-600" />
+                </button>
+            </div>
+            <div className="p-4">
+                <h2 className="text-xl font-semibold mb-4">Menu</h2>
+                <nav className="space-y-4">
+                    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black uppercase">Men</Link>
+                    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black uppercase">Women</Link>
+                    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black uppercase">Top wear</Link>
+                    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black uppercase">Bottom wear</Link>
+                </nav>
+            </div>
+        </div>
     </>
   );
 }
